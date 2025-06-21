@@ -489,7 +489,7 @@ const AuthPage = () => {
 
     if (isLogin) {
       try {
-        const res = await axios.post('http://localhost:3000/login', { email, password });
+        const res = await axios.post('https://bizlisters-backendcon.onrender.com/login', { email, password });
         if (res.data.success) {
           login(res.data.user);
           navigate('/');
@@ -504,7 +504,7 @@ const AuthPage = () => {
       }
 
       try {
-        await axios.post('http://localhost:3000/send-otp', { email });
+        await axios.post('https://bizlisters-backendcon.onrender.com/send-otp', { email });
         setPendingUserData({ username, email, password, phone }); // ✅ include phone
         setOtpModalOpen(true);
       } catch (err) {
@@ -515,13 +515,13 @@ const AuthPage = () => {
 
   const handleOtpVerification = async (otp) => {
     try {
-      const res = await axios.post('http://localhost:3000/verify-otp', {
+      const res = await axios.post('https://bizlisters-backendcon.onrender.com/verify-otp', {
         email: pendingUserData.email,
         otp,
       });
 
       if (res.data.success) {
-        const register = await axios.post('http://localhost:3000/register', pendingUserData);
+        const register = await axios.post('https://bizlisters-backendcon.onrender.com/register', pendingUserData);
         if (register.data.success) {
           login(register.data.user);
           setOtpModalOpen(false);
