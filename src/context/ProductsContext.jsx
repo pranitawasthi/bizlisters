@@ -104,7 +104,7 @@ export const ProductsProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://ecommerce-backend-hgv4.onrender.com/product');
+        const response = await axios.get('https://bizlisters-backendcon.onrender.com/product');
         setAllProducts(response.data.products);
       } catch (err) {
         setError(err);
