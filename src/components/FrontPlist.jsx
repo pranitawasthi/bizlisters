@@ -1,11 +1,14 @@
 // import { useState } from 'react';
-// import { Filter, Star } from 'lucide-react';
+// import { Filter, Star, X } from 'lucide-react';
 // import { useProducts } from '../context/ProductsContext';
+// import { Link } from 'react-router-dom';
 
 // const FrontPlist = () => {
 //   const { products } = useProducts();
+//   console.log(products);
 //   const [activeCategory, setActiveCategory] = useState('All');
-//   const [visibleCount, setVisibleCount] = useState(8); // Initial visible count
+//   const [visibleCount, setVisibleCount] = useState(8);
+//   const [selectedProduct, setSelectedProduct] = useState(null);
 
 //   const categories = ['All', 'Electronics', 'Fashion', 'Home', 'Beauty', 'Food'];
 
@@ -14,7 +17,7 @@
 //       ? products
 //       : products.filter((product) => product.category === activeCategory);
 
-//   const visibleProducts = filteredProducts.slice(0, visibleCount); // Limit visible products
+//   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
 //   return (
 //     <section id="products" className="py-8">
@@ -32,7 +35,7 @@
 //                 key={category}
 //                 onClick={() => {
 //                   setActiveCategory(category);
-//                   setVisibleCount(8); // Reset visible count when category changes
+//                   setVisibleCount(8);
 //                 }}
 //                 className={`px-3 py-1 text-sm rounded-full transition-colors ${
 //                   activeCategory === category
@@ -51,7 +54,8 @@
 //         {visibleProducts.map((product) => (
 //           <div
 //             key={product.id}
-//             className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-300"
+//             onClick={() => setSelectedProduct(product)}
+//             className="cursor-pointer bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-300"
 //           >
 //             <div className="relative pb-[56.25%]">
 //               <img
@@ -103,6 +107,127 @@
 //           </button>
 //         </div>
 //       )}
+
+//       {/* Modal */}
+//       {/* {selectedProduct && (
+//         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+//           <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+//             <button
+//               onClick={() => setSelectedProduct(null)}
+//               className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+//             >
+//               <X className="h-5 w-5" />
+//             </button>
+
+//             <img
+//               src={selectedProduct.image}
+//               alt={selectedProduct.name}
+//               className="w-full h-64 object-cover rounded-md mb-4"
+//             />
+//             <h2 className="text-xl font-semibold text-gray-900">{selectedProduct.name}</h2>
+//             <p className="text-sm text-gray-500 mb-2">{selectedProduct.category}</p>
+//             <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
+//             <div className="flex justify-between items-center">
+//               <span className="text-lg font-bold text-blue-600">${selectedProduct.price.toFixed(2)}</span>
+//               <span className="text-sm text-gray-500">{selectedProduct.store}</span>
+//             </div>
+//           </div>
+//         </div>
+//       )} */}
+//       {selectedProduct && (
+//   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+//     <div className="bg-white rounded-xl shadow-lg w-[90%] max-w-3xl p-6 relative">
+//       <button
+//         onClick={() => setSelectedProduct(null)}
+//         className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+//       >
+//         <X className="h-6 w-6" />
+//       </button>
+
+//       <div className="flex flex-col md:flex-row gap-6">
+//         {/* Image */}
+//         <div className="md:w-1/2">
+//           <img
+//             src={selectedProduct.image}
+//             alt={selectedProduct.name}
+//             className="w-full h-64 object-cover rounded-md"
+//           />
+//         </div>
+
+//         {/* Info */}
+//         <div className="md:w-1/2 flex flex-col justify-between">
+//           <div>
+//             <h2 className="text-2xl font-bold text-gray-900">{selectedProduct.name}</h2>
+//             <p className="text-sm text-gray-500 mb-2">{selectedProduct.category}</p>
+//             <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
+
+//             <div className="flex items-center text-yellow-500 mb-2">
+//               <Star className="h-5 w-5 fill-current" />
+//               <span className="ml-1 text-sm">{selectedProduct.rating}</span>
+//             </div>
+
+//             <div className="text-lg font-semibold text-blue-600">
+//               ${selectedProduct.price.toFixed(2)}
+//               {selectedProduct.discount > 0 && (
+//                 <span className="text-gray-400 text-sm line-through ml-2">
+//                   ${(selectedProduct.price * (1 + selectedProduct.discount / 100)).toFixed(2)}
+//                 </span>
+//               )}
+//             </div>
+//           </div>
+
+//           <div className="mt-6 flex gap-4 flex-wrap">
+//             {selectedProduct.contact && (
+//               <a
+//                 href={`https://wa.me/${selectedProduct.contact}`}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+//               >
+//                 Contact Seller
+//               </a>
+//             )}
+
+//             {selectedProduct.website && (
+//               <a
+//                 href={selectedProduct.website}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+//               >
+//                 Visit Website
+//               </a>
+//             )}
+//           </div>
+//           <div className="mt-6 flex flex-wrap gap-4">
+//   <button
+//     onClick={() =>
+//       selectedProduct.contact &&
+//       window.open(`https://wa.me/${selectedProduct.contact}`, '_blank')
+//     }
+//     className="flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition "
+//     disabled={!selectedProduct.contact}
+//   >
+//     📱 Contact Seller
+//   </button>
+
+//   <Link
+//     to={`/store/${selectedProduct.store}`}
+//     className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+//     disabled={!selectedProduct.website}
+//   >
+//     🌐 Visit Store
+//   </Link>
+// </div>
+
+
+//           <p className="text-sm text-gray-500 mt-4">Sold by: {selectedProduct.store}</p>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// )}
+
 //     </section>
 //   );
 // };
@@ -111,14 +236,22 @@
 
 
 
+
+
+
+
+
+
+
 import { useState } from 'react';
 import { Filter, Star, X } from 'lucide-react';
 import { useProducts } from '../context/ProductsContext';
+import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
 const FrontPlist = () => {
   const { products } = useProducts();
-  console.log(products);
+  const { addToCart } = useCart(); // ✅ get addToCart
   const [activeCategory, setActiveCategory] = useState('All');
   const [visibleCount, setVisibleCount] = useState(8);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -205,6 +338,16 @@ const FrontPlist = () => {
                 </div>
                 <span className="text-xs text-gray-500">{product.store}</span>
               </div>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product);
+                }}
+                className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+              >
+                🛒 Add to Cart
+              </button>
             </div>
           </div>
         ))}
@@ -222,125 +365,106 @@ const FrontPlist = () => {
       )}
 
       {/* Modal */}
-      {/* {selectedProduct && (
+      {selectedProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+          <div className="bg-white rounded-xl shadow-lg w-[90%] max-w-3xl p-6 relative">
             <button
               onClick={() => setSelectedProduct(null)}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
             >
-              <X className="h-5 w-5" />
+              <X className="h-6 w-6" />
             </button>
 
-            <img
-              src={selectedProduct.image}
-              alt={selectedProduct.name}
-              className="w-full h-64 object-cover rounded-md mb-4"
-            />
-            <h2 className="text-xl font-semibold text-gray-900">{selectedProduct.name}</h2>
-            <p className="text-sm text-gray-500 mb-2">{selectedProduct.category}</p>
-            <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold text-blue-600">${selectedProduct.price.toFixed(2)}</span>
-              <span className="text-sm text-gray-500">{selectedProduct.store}</span>
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Image */}
+              <div className="md:w-1/2">
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full h-64 object-cover rounded-md"
+                />
+              </div>
+
+              {/* Info */}
+              <div className="md:w-1/2 flex flex-col justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">{selectedProduct.name}</h2>
+                  <p className="text-sm text-gray-500 mb-2">{selectedProduct.category}</p>
+                  <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
+
+                  <div className="flex items-center text-yellow-500 mb-2">
+                    <Star className="h-5 w-5 fill-current" />
+                    <span className="ml-1 text-sm">{selectedProduct.rating}</span>
+                  </div>
+
+                  <div className="text-lg font-semibold text-blue-600">
+                    ${selectedProduct.price.toFixed(2)}
+                    {selectedProduct.discount > 0 && (
+                      <span className="text-gray-400 text-sm line-through ml-2">
+                        ${(selectedProduct.price * (1 + selectedProduct.discount / 100)).toFixed(2)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-6 flex gap-4 flex-wrap">
+                  {selectedProduct.contact && (
+                    <a
+                      href={`https://wa.me/${selectedProduct.contact}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+                    >
+                      Contact Seller
+                    </a>
+                  )}
+
+                  {selectedProduct.website && (
+                    <a
+                      href={selectedProduct.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                    >
+                      Visit Website
+                    </a>
+                  )}
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-4">
+                  <button
+                    onClick={() =>
+                      selectedProduct.contact &&
+                      window.open(`https://wa.me/${selectedProduct.contact}`, '_blank')
+                    }
+                    className="flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition "
+                    disabled={!selectedProduct.contact}
+                  >
+                    📱 Contact Seller
+                  </button>
+
+                  <Link
+                    to={`/store/${selectedProduct.store}`}
+                    className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                  >
+                    🌐 Visit Store
+                  </Link>
+                </div>
+
+                {/* ✅ Add to Cart in Modal */}
+                <button
+                  onClick={() => addToCart(selectedProduct)}
+                  className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition self-start"
+                >
+                  🛒 Add to Cart
+                </button>
+
+                <p className="text-sm text-gray-500 mt-4">Sold by: {selectedProduct.store}</p>
+              </div>
             </div>
           </div>
         </div>
-      )} */}
-      {selectedProduct && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div className="bg-white rounded-xl shadow-lg w-[90%] max-w-3xl p-6 relative">
-      <button
-        onClick={() => setSelectedProduct(null)}
-        className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
-      >
-        <X className="h-6 w-6" />
-      </button>
-
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Image */}
-        <div className="md:w-1/2">
-          <img
-            src={selectedProduct.image}
-            alt={selectedProduct.name}
-            className="w-full h-64 object-cover rounded-md"
-          />
-        </div>
-
-        {/* Info */}
-        <div className="md:w-1/2 flex flex-col justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">{selectedProduct.name}</h2>
-            <p className="text-sm text-gray-500 mb-2">{selectedProduct.category}</p>
-            <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
-
-            <div className="flex items-center text-yellow-500 mb-2">
-              <Star className="h-5 w-5 fill-current" />
-              <span className="ml-1 text-sm">{selectedProduct.rating}</span>
-            </div>
-
-            <div className="text-lg font-semibold text-blue-600">
-              ${selectedProduct.price.toFixed(2)}
-              {selectedProduct.discount > 0 && (
-                <span className="text-gray-400 text-sm line-through ml-2">
-                  ${(selectedProduct.price * (1 + selectedProduct.discount / 100)).toFixed(2)}
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-6 flex gap-4 flex-wrap">
-            {selectedProduct.contact && (
-              <a
-                href={`https://wa.me/${selectedProduct.contact}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
-              >
-                Contact Seller
-              </a>
-            )}
-
-            {selectedProduct.website && (
-              <a
-                href={selectedProduct.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-              >
-                Visit Website
-              </a>
-            )}
-          </div>
-          <div className="mt-6 flex flex-wrap gap-4">
-  <button
-    onClick={() =>
-      selectedProduct.contact &&
-      window.open(`https://wa.me/${selectedProduct.contact}`, '_blank')
-    }
-    className="flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition "
-    disabled={!selectedProduct.contact}
-  >
-    📱 Contact Seller
-  </button>
-
-  <Link
-    to={`/store/${selectedProduct.store}`}
-    className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-    disabled={!selectedProduct.website}
-  >
-    🌐 Visit Website
-  </Link>
-</div>
-
-
-          <p className="text-sm text-gray-500 mt-4">Sold by: {selectedProduct.store}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </section>
   );
 };

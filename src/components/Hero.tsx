@@ -68,7 +68,7 @@ const Hero = () => {
             <button className="bg-blue-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-blue-700 transition">
               Get Started
             </button>
-            <button className="border border-blue-600 text-blue-600 px-6 py-3 rounded-xl hover:bg-blue-100 transition">
+            <button className="border bg-blue-600 text-yellow-100 px-6 py-3 rounded-xl hover:bg-blue-100 transition">
               Learn More
             </button>
           </div>

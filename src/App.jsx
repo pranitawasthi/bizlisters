@@ -12,6 +12,11 @@ import Dashboard from './components/seller/Dashboard';
 import ProductsManagement from './components/seller/ProductsManagement';
 import StoreDetails from './components/StoreDetails';
 import { StoresProvider } from './context/StoresContext';
+import { About } from './components/About';
+import { Contact } from './components/Contact';
+import { CartProvider } from './context/CartContext';
+import { Cart } from './components/Cart';
+import { SearchProvider } from './context/SearchContext';
 
  
 function App() {
@@ -19,15 +24,27 @@ function App() {
     <>
 
 <BrowserRouter>
+<SearchProvider>
+
+
+
+<AuthProvider>
+
+
+<CartProvider>
+
+
     <StoresProvider>
 
     
     <SellerProvider>
 
     
-  <AuthProvider>
+  
     
       <Routes>
+        <Route path='about' element={<About/>} />
+        <Route path='contact'  element={<Contact/>} />
         <Route path='/' element={<Front/>} />
         <Route path='/authenticate' element={<AuthPage/>} />
         <Route path='/products' element={<ProductPage/>} />
@@ -36,19 +53,31 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/manage" element={<ProductsManagement/>} />
         <Route path="/store/:storename" element={<StoreDetails/>} />
+        <Route path="/cart" element={<Cart/>} />
+        {/* <Route path="/products/:id" element={<ProductDetails/>} /> */}
+
 
 
       </Routes>
     
 
-    </AuthProvider>  
+    
 
 
     </SellerProvider> 
 
     </StoresProvider>
 
+    </CartProvider>
+
+    </AuthProvider>
+
+
+    </SearchProvider>
+
     </BrowserRouter>
+
+    
   
     </>
   );
