@@ -104,7 +104,7 @@ export const CartProvider = ({ children }) => {
 
   const fetchCart = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/cart/${userId}`);
+      const res = await axios.get(`https://bizlisters-backendcon.onrender.com/cart/${userId}`);
       setCart(res.data.items || []);
     } catch (err) {
       console.error('Failed to fetch cart:', err.message);
@@ -113,7 +113,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (product) => {  
     try {
-      const res = await axios.post('http://localhost:3000/cart/add', {
+      const res = await axios.post('https://bizlisters-backendcon.onrender.com/cart/add', {
         userId,
         productId: product._id,
         quantity: 1,
@@ -126,7 +126,7 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = async (productId) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/cart/${userId}/${productId}`);
+      const res = await axios.delete(`https://bizlisters-backendcon.onrender.com/cart/${userId}/${productId}`);
       setCart(res.data.items);
     } catch (err) {
       console.error('Remove from cart error:', err.message);
@@ -135,7 +135,7 @@ export const CartProvider = ({ children }) => {
 
   const updateQuantity = async (productId, quantity) => {
     try {
-      const res = await axios.put(`http://localhost:3000/cart/${userId}/${productId}`, { quantity });
+      const res = await axios.put(`https://bizlisters-backendcon.onrender.com/cart/${userId}/${productId}`, { quantity });
       setCart(res.data.items);
     } catch (err) {
       console.error('Update quantity error:', err.message);
