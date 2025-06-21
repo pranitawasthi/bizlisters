@@ -169,7 +169,7 @@ export const StoresProvider = ({ children }) => {
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        const response = await axios.get('https://ecommerce-backend-hgv4.onrender.com/store');
+        const response = await axios.get('https://bizlisters-backendcon.onrender.com/store');
         setAllStores(response.data.stores);
       } catch (err) {
         console.error('Failed to fetch stores:', err);
